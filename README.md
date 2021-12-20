@@ -16,9 +16,18 @@ Recursos disponíveis para acesso via API ou endpoints(URI):
 
 um exemplo do funcionamento das rotas.
 
-## Dependencias
+## Dependencias | Instalando o proejcto
+
+# Normal
 
 - Rode um yarn | npm install para baixar todas as dependências
+
+# Via DOCKER
+
+1. `docker-compose build/sudo docker-compose build` - no windows/Linux
+2. `docker-compose up -d/sudo docker-compose up -d` - Para rodar a o container em backGround
+3. `docker-compose up/docker-compose up` - Para rodar a aplicação também
+4. Rode um `docker ps/sudo docker ps` - Para verificar se os containers estão rodando
 
 Para rodar a aplicação siga os seguintes passos:
 Primeiro: Crie as variáveis de ambiente `.env`, `.env.example` e `.env.development` e dentro delas configure as seguintes variáveis:
@@ -128,35 +137,107 @@ Caso a requisição não conter nenhuma resposta ou falhar o retorno será:
   "message": "O campo \"name\" é obrigatório."
   }
 
-### Listar module e aula (List) [GET]
+### Pesquisar um nome por ID [GET]
 
-- Request (application/json)
+- Request (url/params)
 
-  - Headers
-
-        Authorization: Bearer [access_token]
+  - params example
+    {{ _.baseURL }}decripted/7da66bdb-4b84-4587-92a3-44d159074bb3
 
 - Response 200 (application/json)
 
-        {
-            "id": 1,
-            "name": "Desenvolvimento FrontEnd Master",
-            "lessons": [
-                "http://127.0.0.1:8000/api/v1/lessons/5/",
-                "http://127.0.0.1:8000/api/v1/lessons/1/",
-                "http://127.0.0.1:8000/api/v1/lessons/2/",
-                "http://127.0.0.1:8000/api/v1/lessons/3/",
-                "http://127.0.0.1:8000/api/v1/lessons/4/"
-            ]
-        }
+  - Body
+    {
+    "success": true,
+    "message": "Name Decripted",
+    "data": [
+    {
+    "id": "7da66bdb-4b84-4587-92a3-44d159074bb3",
+    "decripted_name": "Luís Afonso Caputo"
+    }
+    ]
+    }
+
+Caso a requisição não conter nenhuma resposta ou falhar o retorno será:
+
+- Response 400(Aplication/json)
+  {
+  "success": false,
+  "message": "Name not found."
+  }
+
+E quando o ID for inválido
+
+- Response 500(Aplication/json)
+  {
+  "success": false,
+  "message": "invalid input syntax for type uuid: \"7da66bdb-4b84-4587--44d159074bb8\""
+  }
+
+### Listando todos os nomes gravados na base de dados [GET]
+
+- Request (url)
+
+  - Headers
+
+- Response 200 (application/json)
+
+  {
+  "success": true,
+  "message": "All Names",
+  "data": [
+  {
+  "id": "2df1cf4b-8feb-4b20-b385-33c1c231c656",
+  "name": "Teste",
+  "encriptedName": "VGVzdGU=",
+  "createdAt": "2021-12-19T16:53:42.552Z",
+  "updatedAt": "2021-12-19T16:53:42.552Z"
+  },
+  {
+  "id": "7da66bdb-4b84-4587-92a3-44d159074bb3",
+  "name": "Luís Afonso Caputo",
+  "encriptedName": "THXDrXMgQWZvbnNvIENhcHV0bw==",
+  "createdAt": "2021-12-19T17:19:47.765Z",
+  "updatedAt": "2021-12-19T17:19:47.765Z"
+  },
+  {
+  "id": "ad9f4365-2f55-4349-96d7-05e78be34e8d",
+  "name": "Faz certo - que dá certo!",
+  "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0byE=",
+  "createdAt": "2021-12-19T17:29:52.993Z",
+  "updatedAt": "2021-12-19T17:29:52.993Z"
+  },
+  {
+  "id": "ca9520c6-e193-45e8-b64f-9f7c790e8136",
+  "name": "Faz certo - que dá certo",
+  "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0bw==",
+  "createdAt": "2021-12-19T17:31:03.434Z",
+  "updatedAt": "2021-12-19T17:31:03.434Z"
+  },
+  {
+  "id": "02c12128-4019-4f72-9ec3-addc6c271dfc",
+  "name": "Faz certo - que dá cert",
+  "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0",
+  "createdAt": "2021-12-19T17:31:50.299Z",
+  "updatedAt": "2021-12-19T17:31:50.299Z"
+  }
+  ]
+  }
 
 ## Funcionalidades
 
 Os recursos funcionais da aplicação são:
 
-- [x] Criação, remoção e actualização de usuário
-- [x] Criação, remoção, actualização e deleção de módulo
-- [x] Criação, remoção, actualização e deleção de aula
-- [x] Authenticação de usuário
-- [x] Listagem das aulas em ordem alfabética
-- [x] Validação dos campos antes da inserção
+- [x] Criação de um nome e salvando de forma encriptada
+- [x] Encriptar uma string base64
+- [x] Desencriptar uma string encriptada base64 para UTF-8
+- [x] Não permite a criação de um nome já existente na apliação
+- [x] Não Permite a criação de um nome vazio like ""
+- [x] Listagem de nome desencriptado por ID
+- [x] Não Permite buscar um nome com ID inválido
+- [x] Não Permite buscar um nome com ID Inexistente
+- [x] Listagem de todos os gravados na aplicação
+
+## Testando a Aplicação
+
+Para testar as funcionalidades acima descritas, basta abrir o insomnia do seu computador e lá dentro, importar o ficheiro `facile_challenge-routes.json` localizado em `src/insomnia/`.
