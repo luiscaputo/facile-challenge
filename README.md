@@ -45,6 +45,8 @@ Segundo: crie uma base de dados com o nome `facile_challenge`
 - Nesse Passo certifique-se | ou rode o comando
   `CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;`
   Actualize as configurações da base de dados, colocando o `user`, `password`, `host`
+- Ou pode simplesmente continuar usando banco de dados em cloud hospedado em `https://api.elephantsql.com/`
+- Cujo os dados de acesso estão localizado em `.env.development`
 
 ```nodeJs - ormconfig.js
   module.exports = [
@@ -111,31 +113,42 @@ Requisições para a API devem seguir os padrões:
 
   - Body
 
-    {
-    "name": "Faz certo - que dá certo!",
-    }
+    ```
+      {
+        "name": "Faz certo - que dá certo!",
+      }
+
+    ```
 
 - Response 201 (application/json)
 
   - Body
-    {
-    "success": true,
-    "message": "Name encripted",
-    "data": [
-    {
-    "id": "69a9eff3-d4e6-43c1-a38d-a32367f6918b",
-    "encripted_name": "dGVzdGU="
-    }
-    ]
-    }
+
+    ```
+      {
+        "success": true,
+        "message": "Name encripted",
+        "data": [
+          {
+            "id": "69a9eff3-d4e6-43c1-a38d-a32367f6918b",
+            "encripted_name": "dGVzdGU="
+          }
+        ]
+      }
+
+    ```
 
 Caso a requisição não conter nenhuma resposta ou falhar o retorno será:
 
 - Response 400(Aplication/json)
-  {
-  "code": "E_VALIDATION_FAILURE",
-  "message": "O campo \"name\" é obrigatório."
-  }
+
+  ```
+    {
+      "code": "E_VALIDATION_FAILURE",
+      "message": "O campo \"name\" é obrigatório."
+    }
+
+  ```
 
 ### Pesquisar um nome por ID [GET]
 
@@ -147,32 +160,44 @@ Caso a requisição não conter nenhuma resposta ou falhar o retorno será:
 - Response 200 (application/json)
 
   - Body
-    {
-    "success": true,
-    "message": "Name Decripted",
-    "data": [
-    {
-    "id": "7da66bdb-4b84-4587-92a3-44d159074bb3",
-    "decripted_name": "Luís Afonso Caputo"
-    }
-    ]
-    }
 
-Caso a requisição não conter nenhuma resposta ou falhar o retorno será:
+        ```
+          {
+            "success": true,
+            "message": "Name Decripted",
+            "data": [
+              {
+                "id": "7da66bdb-4b84-4587-92a3-44d159074bb3",
+                "decripted_name": "Luís Afonso Caputo"
+              }
+            ]
+          }
+
+        ```
+
+    Caso a requisição não conter nenhuma resposta ou falhar o retorno será:
 
 - Response 400(Aplication/json)
-  {
-  "success": false,
-  "message": "Name not found."
-  }
+
+  ```
+    {
+      "success": false,
+      "message": "Name not found."
+    }
+
+  ```
 
 E quando o ID for inválido
 
 - Response 500(Aplication/json)
-  {
-  "success": false,
-  "message": "invalid input syntax for type uuid: \"7da66bdb-4b84-4587--44d159074bb8\""
-  }
+
+  ```
+    {
+      "success": false,
+      "message": "invalid input syntax for type uuid: \"7da66bdb-4b84-4587--44d159074bb8\""
+    }
+
+  ```
 
 ### Listando todos os nomes gravados na base de dados [GET]
 
@@ -182,47 +207,50 @@ E quando o ID for inválido
 
 - Response 200 (application/json)
 
-  {
-  "success": true,
-  "message": "All Names",
-  "data": [
-  {
-  "id": "2df1cf4b-8feb-4b20-b385-33c1c231c656",
-  "name": "Teste",
-  "encriptedName": "VGVzdGU=",
-  "createdAt": "2021-12-19T16:53:42.552Z",
-  "updatedAt": "2021-12-19T16:53:42.552Z"
-  },
-  {
-  "id": "7da66bdb-4b84-4587-92a3-44d159074bb3",
-  "name": "Luís Afonso Caputo",
-  "encriptedName": "THXDrXMgQWZvbnNvIENhcHV0bw==",
-  "createdAt": "2021-12-19T17:19:47.765Z",
-  "updatedAt": "2021-12-19T17:19:47.765Z"
-  },
-  {
-  "id": "ad9f4365-2f55-4349-96d7-05e78be34e8d",
-  "name": "Faz certo - que dá certo!",
-  "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0byE=",
-  "createdAt": "2021-12-19T17:29:52.993Z",
-  "updatedAt": "2021-12-19T17:29:52.993Z"
-  },
-  {
-  "id": "ca9520c6-e193-45e8-b64f-9f7c790e8136",
-  "name": "Faz certo - que dá certo",
-  "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0bw==",
-  "createdAt": "2021-12-19T17:31:03.434Z",
-  "updatedAt": "2021-12-19T17:31:03.434Z"
-  },
-  {
-  "id": "02c12128-4019-4f72-9ec3-addc6c271dfc",
-  "name": "Faz certo - que dá cert",
-  "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0",
-  "createdAt": "2021-12-19T17:31:50.299Z",
-  "updatedAt": "2021-12-19T17:31:50.299Z"
-  }
-  ]
-  }
+  ```
+    {
+      "success": true,
+      "message": "All Names",
+      "data": [
+        {
+          "id": "2df1cf4b-8feb-4b20-b385-33c1c231c656",
+          "name": "Teste",
+          "encriptedName": "VGVzdGU=",
+          "createdAt": "2021-12-19T16:53:42.552Z",
+          "updatedAt": "2021-12-19T16:53:42.552Z"
+        },
+        {
+          "id": "7da66bdb-4b84-4587-92a3-44d159074bb3",
+          "name": "Luís Afonso Caputo",
+          "encriptedName": "THXDrXMgQWZvbnNvIENhcHV0bw==",
+          "createdAt": "2021-12-19T17:19:47.765Z",
+          "updatedAt": "2021-12-19T17:19:47.765Z"
+        },
+        {
+          "id": "ad9f4365-2f55-4349-96d7-05e78be34e8d",
+          "name": "Faz certo - que dá certo!",
+          "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0byE=",
+          "createdAt": "2021-12-19T17:29:52.993Z",
+          "updatedAt": "2021-12-19T17:29:52.993Z"
+        },
+        {
+          "id": "ca9520c6-e193-45e8-b64f-9f7c790e8136",
+          "name": "Faz certo - que dá certo",
+          "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0bw==",
+          "createdAt": "2021-12-19T17:31:03.434Z",
+          "updatedAt": "2021-12-19T17:31:03.434Z"
+        },
+        {
+          "id": "02c12128-4019-4f72-9ec3-addc6c271dfc",
+          "name": "Faz certo - que dá cert",
+          "encriptedName": "RmF6IGNlcnRvIC0gcXVlIGTDoSBjZXJ0",
+          "createdAt": "2021-12-19T17:31:50.299Z",
+          "updatedAt": "2021-12-19T17:31:50.299Z"
+        }
+      ]
+    }
+
+  ```
 
 ## Funcionalidades
 
@@ -241,3 +269,25 @@ Os recursos funcionais da aplicação são:
 ## Testando a Aplicação
 
 Para testar as funcionalidades acima descritas, basta abrir o insomnia do seu computador e lá dentro, importar o ficheiro `facile_challenge-routes.json` localizado em `src/insomnia/`.
+
+## Tecnologias/Ferramentas Usadas
+
+- NodeJs
+- TypeScript
+- PostgreSQL
+- PSQL in shell mode
+- ExpressJs
+- typeorm
+- Docker
+- Docker Compose
+- Jest
+- Lint
+- Prettier
+- Heroku Cloud
+- Insomnia
+- Elephantsql
+- Babel
+
+<hr>
+
+<h4>Desenvolvido por: <strong style="color: #1f6feb; align: center">Luís Afonso Caputo</strong></h4>

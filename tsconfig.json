@@ -1,0 +1,48 @@
+{
+   "compilerOptions": {
+      "lib": [
+         "es5",
+         "es6"
+      ],
+      "target": "es2018",
+      "module": "commonjs",
+      "strict": false,
+      "moduleResolution": "node",
+      "outDir": "./build",
+      "rootDir": "src",
+      "baseUrl": ".",
+      "paths": {
+         "@types/*": [
+            "./src/@types/*"
+         ],
+         "@controllers/*": [
+            "./src/controllers/*"
+         ],
+         "@middlewares/*": [
+            "./src/middlewares/*"
+         ],
+         "@models/*": [
+            "./src/models/*"
+         ],
+         "@repositories/*": [
+            "./src/repositories/*"
+         ],
+         "@routes/*": [
+            "./src/routes/*"
+         ],
+         "@services/*": [
+            "./src/services/*"
+         ]
+      },
+      "resolveJsonModule": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "esModuleInterop": true,
+      "sourceMap": true
+   },
+   "exclude": [
+      "node_modules",
+      "jest.config.ts",
+      "__tests__"
+   ]
+}
