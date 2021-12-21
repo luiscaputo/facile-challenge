@@ -2,6 +2,13 @@
   "name": "FacileChallenge",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node build/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "build": "rimraf build && babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
+    "test": "jest",
+    "typeorm": "node node_modules/typeorm/cli.js"
+  },
   "repository": "https://github.com/luiscaputo/facile-challenge.git",
   "author": "<luiscaputo15@gmail.com>",
   "license": "MIT",
@@ -41,12 +48,5 @@
     "typeorm": "0.2.38",
     "typeorm-model-generator": "^0.4.6",
     "yup": "^0.32.11"
-  },
-  "scripts": {
-    "start": "node build/server.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "build": "rimraf build && babel src --extensions \".js,.ts\" --out-dir build --copy-files --no-copy-ignored",
-    "test": "jest",
-    "typeorm": "node node_modules/typeorm/cli.js"
   }
 }
